@@ -23,6 +23,7 @@ class GitClass(object):
         self.commitMessage = commitMessage
         self.repoW = self.Repo(self.repoTarget)
         self.currentCommit = self.repoW.git.commit('-m', self.commitMessage)
+        self.currentPush = self.repoW.git.push()
 
     @property
     def repo(self):
