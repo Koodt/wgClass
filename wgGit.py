@@ -1,30 +1,33 @@
 #!/usr/bin/python3
 
 class GitClass(object):
-    def __init__(self, repoTarget):
+    def __init__(self, repoPath):
         from git import Repo
         self.Repo = Repo
-        self.repoTarget = repoTarget
+        self.repoPath = repoPath
 
     def dlRepo(self, url):
         self.url = url
-        self._repo = self.Repo.clone_from(self.url, self.repoTarget)
-        self.repoW = self.Repo(self.repoTarget)
+        self._repo = self.Repo.clone_from(self.url, self.repoPath)
+        self.currentRepo = self.Repo(self.repoPath)
 
     def createNewBranch(self, branch):
         self.branch = branch
-        self.newBranch = self.repoW.create_head(self.branch)
+        if self.branch not in self.currentRepo.branches:
+            self.newBranch = self.currentRepo.create_head(self.branch)
+        else:
+            print('Branch %s exist' % self.branch)
 
     def selectNeededBranch(self, branch='master'):
         self.branch = branch
-        self.branchSwitch = self.repoW.git.checkout(self.branch)
+        self.branchSwitch = self.currentRepo.git.checkout(self.branch)
 
     def commitAndPush(self, commitMessage):
         self.commitMessage = commitMessage
-        self.repoW = self.Repo(self.repoTarget)
-        if not self.repoW.is_dirty():
-            self.currentCommit = self.repoW.git.commit('-m', self.commitMessage)
-            self.currentPush = self.repoW.git.push()
+        self.currentRepo = self.Repo(self.repoPath)
+        if not self.currentRepo.is_dirty():
+            self.currentCommit = self.currentRepo.git.commit('-m', self.commitMessage)
+            self.currentPush = self.currentRepo.git.push()
 
     @property
     def repo(self):
@@ -39,4 +42,4 @@ if __name__ == '__main__':
     wgClass.dlRepo('https://github.com/Koodt/wgClass.git')
     wgClass.createNewBranch(newBranch)
     wgClass.selectNeededBranch(newBranch)
-    wgClass.commitAndPush('Test commit')
+#    wgClass.commitAndPush('Test commit')
