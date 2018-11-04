@@ -19,8 +19,9 @@ class GitClass(object):
         self.branch = branch
         self.branchSwitch = self.repoW.git.checkout(self.branch)
 
-    def commitAndPush(self):
-        pass
+    def commitAndPush(self, commitMessage):
+        self.commitMessage = commitMessage
+        self.currentCommit = self.repoW.git.commit('-m', self.commitMessage)
 
     @property
     def repo(self):
@@ -32,6 +33,7 @@ class GitClass(object):
 if __name__ == '__main__':
     newBranch = 'anotherBranch'
     wgClass = GitClass('/srv/kill')
-    wgClass.dlRepo('https://github.com/Koodt/wgClass.git')
-    wgClass.createNewBranch(newBranch)
-    wgClass.selectNeededBranch(newBranch)
+#    wgClass.dlRepo('https://github.com/Koodt/wgClass.git')
+#    wgClass.createNewBranch(newBranch)
+#    wgClass.selectNeededBranch(newBranch)
+    wgClass.commitAndPush('Test commit')
