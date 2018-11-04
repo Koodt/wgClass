@@ -5,6 +5,7 @@ class GitClass(object):
         from git import Repo
         self.Repo = Repo
         self.repoTarget = repoTarget
+        self.repoW = self.Repo(self.repoTarget)
 
     def dlRepo(self, url):
         self.url = url
@@ -12,22 +13,18 @@ class GitClass(object):
 
     def createNewBranch(self, branch):
         self.branch = branch
-        self.repoW = self.Repo(self.repoTarget)
         self.newBranch = self.repoW.create_head(self.branch)
 
     def selectNeededBranch(self, branch):
         self.branch = branch
-        self.repoW = self.Repo(self.repoTarget)
         self.branchSwitch = self.repoW.git.checkout(self.branch)
 
     def selectMasterBranch(self):
-        self.repoW = self.Repo(self.repoTarget)
         self.new_branch = self.repoW.heads.master.checkout()
 
-    def commitAndPush(self, repoTarget):
-        self.repoTarget = repoTarget
-        self
-
+    def commitAndPush(self):
+        pass
+        
     @property
     def repo(self):
         if self._repo is None:
