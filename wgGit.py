@@ -22,8 +22,9 @@ class GitClass(object):
     def commitAndPush(self, commitMessage):
         self.commitMessage = commitMessage
         self.repoW = self.Repo(self.repoTarget)
-        self.currentCommit = self.repoW.git.commit('-m', self.commitMessage)
-        self.currentPush = self.repoW.git.push()
+        if not self.repoW.is_dirty():
+            self.currentCommit = self.repoW.git.commit('-m', self.commitMessage)
+            self.currentPush = self.repoW.git.push()
 
     @property
     def repo(self):
