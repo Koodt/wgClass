@@ -15,7 +15,7 @@ class GitClass(object):
         self.branch = branch
         self.newBranch = self.repoW.create_head(self.branch)
 
-    def selectNeededBranch(self, branch):
+    def selectNeededBranch(self, branch='master'):
         self.branch = branch
         self.branchSwitch = self.repoW.git.checkout(self.branch)
 
@@ -36,5 +36,5 @@ if __name__ == '__main__':
     wgClass = GitClass('/srv/kill')
     wgClass.dlRepo('https://github.com/Koodt/wgClass.git')
     wgClass.createNewBranch('morenewBranch')
-    wgClass.selectNeededBranch('morenewBranch')
+    wgClass.selectNeededBranch()
 #    wgClass.selectMasterBranch('/srv/kill')
