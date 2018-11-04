@@ -20,7 +20,7 @@ class GitClass(object):
         if self.branch not in self.currentRepo.branches:
             self.newBranch = self.currentRepo.create_head(self.branch)
         else:
-            print('Branch %s exist' % self.branch)
+            print('Branch \'%s\' exist' % self.branch)
 
     def selectNeededBranch(self, branch='master'):
         self.branch = branch
