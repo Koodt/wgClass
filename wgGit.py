@@ -34,7 +34,7 @@ class GitClass(object):
 if __name__ == '__main__':
     newBranch = 'anotherBranch'
     wgClass = GitClass('/srv/kill')
-#    wgClass.dlRepo('https://github.com/Koodt/wgClass.git')
-#    wgClass.createNewBranch(newBranch)
-#    wgClass.selectNeededBranch(newBranch)
+    wgClass.dlRepo('https://github.com/Koodt/wgClass.git')
+    wgClass.createNewBranch(newBranch)
+    wgClass.selectNeededBranch(newBranch)
     wgClass.commitAndPush('Test commit')
