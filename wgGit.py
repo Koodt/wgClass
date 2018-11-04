@@ -35,12 +35,10 @@ class GitClass(object):
 
     def commitAndPush(self, commitMessage):
         self.commitMessage = commitMessage
-        self.currentRepo = self.Repo(self.repoPath)
-        if not self.currentRepo.is_dirty():
-            self.currentRepo.git.commit('-m', self.commitMessage)
-            self.currentRepo.git.push()
-        else:
-            self.currentRepo.index.add([self.repoPath])
+        if self.currentRepo.is_dirty():
+            self.currentRepo.git.add('--all')
+        self.currentRepo.git.commit('-m', self.commitMessage)
+        self.currentRepo.git.push()
 
 if __name__ == '__main__':
     newBranch = 'anotherBranch'
