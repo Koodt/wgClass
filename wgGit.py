@@ -6,10 +6,9 @@ class GitClass(object):
         self.Repo = Repo
         self.repoTarget = repoTarget
 
-    def dlRepo(self, url, path):
+    def dlRepo(self, url):
         self.url = url
-        self.path = path
-        self._repo = self.Repo.clone_from(self.url, self.path)
+        self._repo = self.Repo.clone_from(self.url, self.repoTarget)
 
     def createNewBranch(self, branch):
         self.branch = branch
