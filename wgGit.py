@@ -11,9 +11,13 @@ class GitClass(object):
             pass
 
     def dlRepo(self, url):
+        from os import path
         self.url = url
-        self._repo = self.Repo.clone_from(self.url, self.repoPath)
-        self.currentRepo = self.Repo(self.repoPath)
+        if not path.isdir(self.repoPath):
+            self._repo = self.Repo.clone_from(self.url, self.repoPath)
+            self.currentRepo = self.Repo(self.repoPath)
+        else:
+            print('Directory \'%s\' exist' % self.repoPath)
 
     def createNewBranch(self, branch):
         self.branch = branch
