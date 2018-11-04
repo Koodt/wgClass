@@ -5,11 +5,11 @@ class GitClass(object):
         from git import Repo
         self.Repo = Repo
         self.repoTarget = repoTarget
-        self.repoW = self.Repo(self.repoTarget)
 
     def dlRepo(self, url):
         self.url = url
         self._repo = self.Repo.clone_from(self.url, self.repoTarget)
+        self.repoW = self.Repo(self.repoTarget)
 
     def createNewBranch(self, branch):
         self.branch = branch
@@ -24,7 +24,7 @@ class GitClass(object):
 
     def commitAndPush(self):
         pass
-        
+
     @property
     def repo(self):
         if self._repo is None:
