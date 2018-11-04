@@ -14,7 +14,7 @@ class GitClass(object):
         from os import path
         self.url = url
         if not path.isdir(self.repoPath):
-            self._repo = self.Repo.clone_from(self.url, self.repoPath)
+            self.Repo.clone_from(self.url, self.repoPath)
             self.currentRepo = self.Repo(self.repoPath)
         else:
             print('Directory \'%s\' exist' % self.repoPath)
@@ -22,27 +22,25 @@ class GitClass(object):
     def createNewBranch(self, branch):
         self.branch = branch
         if self.branch not in self.currentRepo.branches:
-            self.newBranch = self.currentRepo.create_head(self.branch)
+            self.currentRepo.create_head(self.branch)
         else:
             print('Branch \'%s\' exist' % self.branch)
 
     def selectNeededBranch(self, branch='master'):
         self.branch = branch
-        self.branchSwitch = self.currentRepo.git.checkout(self.branch)
+        if self.currentRepo.active_branch != self.branch:
+            self.currentRepo.git.checkout(self.branch)
+        else:
+            print('Needed branch already selected')
 
     def commitAndPush(self, commitMessage):
         self.commitMessage = commitMessage
         self.currentRepo = self.Repo(self.repoPath)
         if not self.currentRepo.is_dirty():
-            self.currentCommit = self.currentRepo.git.commit('-m', self.commitMessage)
-            self.currentPush = self.currentRepo.git.push()
-
-    @property
-    def repo(self):
-        if self._repo is None:
-            self.dlRepo()
-        return self._repo
-
+            self.currentRepo.git.commit('-m', self.commitMessage)
+            self.currentRepo.git.push()
+        else:
+            self.currentRepo.index.add([self.repoPath])
 
 if __name__ == '__main__':
     newBranch = 'anotherBranch'
