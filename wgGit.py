@@ -5,7 +5,10 @@ class GitClass(object):
         from git import Repo
         self.Repo = Repo
         self.repoPath = repoPath
-        assert self.currentRepo = self.Repo(self.repoPath)
+        try:
+            self.currentRepo = self.Repo(self.repoPath)
+        except:
+            pass
 
     def dlRepo(self, url):
         self.url = url
