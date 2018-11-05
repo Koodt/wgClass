@@ -1,46 +1,11 @@
 #!/usr/bin/python3
+from wgClass import GitClass
+import argparse
 
-class GitClass(object):
-    def __init__(self, repoPath):
-        from git import Repo
-        self.Repo = Repo
-        self.repoPath = repoPath
-        try:
-            self.currentRepo = self.Repo(self.repoPath)
-        except:
-            pass
-
-    def dlRepo(self, url):
-        from os import path
-        self.url = url
-        if not path.isdir(self.repoPath):
-            self.Repo.clone_from(self.url, self.repoPath)
-            self.currentRepo = self.Repo(self.repoPath)
-        else:
-            print('Directory \'%s\' exist' % self.repoPath)
-
-    def createNewBranch(self, branch):
-        self.branch = branch
-        if self.branch not in self.currentRepo.branches:
-            self.currentRepo.create_head(self.branch)
-        else:
-            print('Branch \'%s\' exist' % self.branch)
-
-    def selectNeededBranch(self, branch='master'):
-        self.branch = branch
-        if self.currentRepo.active_branch != self.branch:
-            self.currentRepo.git.checkout(self.branch)
-        else:
-            print('Needed branch already selected')
-
-    def commitAndPush(self, commitMessage):
-        self.commitMessage = commitMessage
-        if self.currentRepo.untracked_files:
-            print('is dirty')
-            self.currentRepo.git.add('--all')
-        print('%s is clean' % self.currentRepo)
-        self.currentRepo.git.commit('-m', self.commitMessage)
-        self.currentRepo.git.push()
+parser = argparse.ArgumentParser(description='wgClass example')
+parser.add_argument('-r', '--role', action='store', dest='khomeRole', help='select role from collector and harvester')
+parser.add_argument('-f', '--file', action='store', dest='filename', nargs='?', type=argparse.FileType('r'), help='Set full path to parsing file')
+results = parser.parse_args()
 
 if __name__ == '__main__':
     newBranch = 'anotherBranch'
@@ -48,4 +13,4 @@ if __name__ == '__main__':
 #    wgClass.dlRepo('https://github.com/Koodt/wgClass.git')
 #    wgClass.createNewBranch(newBranch)
 #    wgClass.selectNeededBranch(newBranch)
-    wgClass.commitAndPush('Test commit')
+    wgClass.commitAndPush('Test commit', newBranch)
