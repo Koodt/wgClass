@@ -1,16 +1,22 @@
 #!/usr/bin/python3
+import sys
 from wgClass import GitClass
 import argparse
 
 parser = argparse.ArgumentParser(description='wgClass example')
-parser.add_argument('-r', '--role', action='store', dest='khomeRole', help='select role from collector and harvester')
-parser.add_argument('-f', '--file', action='store', dest='filename', nargs='?', type=argparse.FileType('r'), help='Set full path to parsing file')
+parser.add_argument('-r', '--repo', action='store', dest='repoPath', help='Path to cloned repo')
+#parser.add_argument('-u', '--url', action='store', dest='repoURL', help='Cloned repo URL')
+parser.add_argument('-b', '--branch', action='store', dest='newBranch', help='Branch name')
+parser.add_argument('-c', '--clone', action='store_true', help='Clone repo')
 results = parser.parse_args()
 
+
 if __name__ == '__main__':
-    newBranch = 'anotherBranch'
-    wgClass = GitClass('/srv/kill')
-#    wgClass.dlRepo('https://github.com/Koodt/wgClass.git')
-#    wgClass.createNewBranch(newBranch)
-#    wgClass.selectNeededBranch(newBranch)
-    wgClass.commitAndPush('Test commit', newBranch)
+    wgClass = GitClass(results.repoPath)
+    if results.clone:
+        wgClass.dlRepo('https://github.com/Koodt/wgClass.git')
+
+    sys.exit()
+#    wgClass.createNewBranch(results.newBranch)
+#    wgClass.selectNeededBranch(results.newBranch)
+#    wgClass.commitAndPush('Test commit', results.newBranch)
