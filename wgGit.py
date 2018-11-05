@@ -17,6 +17,6 @@ if __name__ == '__main__':
         wgClass.dlRepo('https://github.com/Koodt/wgClass.git')
 
     sys.exit()
-#    wgClass.createNewBranch(results.newBranch)
-#    wgClass.selectNeededBranch(results.newBranch)
-#    wgClass.commitAndPush('Test commit', results.newBranch)
+    wgClass.createNewBranch(results.newBranch)
+    wgClass.selectNeededBranch(results.newBranch)
+    wgClass.commitAndPush('Test commit', results.newBranch)
