@@ -35,15 +35,17 @@ class GitClass(object):
 
     def commitAndPush(self, commitMessage):
         self.commitMessage = commitMessage
-        if self.currentRepo.is_dirty():
+        if self.currentRepo.untracked_files:
+            print('is dirty')
             self.currentRepo.git.add('--all')
+        print('%s is clean' % self.currentRepo)
         self.currentRepo.git.commit('-m', self.commitMessage)
         self.currentRepo.git.push()
 
 if __name__ == '__main__':
     newBranch = 'anotherBranch'
     wgClass = GitClass('/srv/kill')
-    wgClass.dlRepo('https://github.com/Koodt/wgClass.git')
-    wgClass.createNewBranch(newBranch)
-    wgClass.selectNeededBranch(newBranch)
-#    wgClass.commitAndPush('Test commit')
+#    wgClass.dlRepo('https://github.com/Koodt/wgClass.git')
+#    wgClass.createNewBranch(newBranch)
+#    wgClass.selectNeededBranch(newBranch)
+    wgClass.commitAndPush('Test commit')
